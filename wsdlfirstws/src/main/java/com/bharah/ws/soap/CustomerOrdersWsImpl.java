@@ -11,6 +11,8 @@ import org.apache.cxf.feature.Features;
 import com.bharath.ws.trainings.CreateOrdersRequest;
 import com.bharath.ws.trainings.CreateOrdersResponse;
 import com.bharath.ws.trainings.CustomerOrdersPortType;
+import com.bharath.ws.trainings.DeleteOrdersRequest;
+import com.bharath.ws.trainings.DeleteOrdersResponse;
 import com.bharath.ws.trainings.GetOrdersRequest;
 import com.bharath.ws.trainings.GetOrdersResponse;
 import com.bharath.ws.trainings.Order;
@@ -72,6 +74,27 @@ public class CustomerOrdersWsImpl implements CustomerOrdersPortType {
 		// 設定回傳結果
 		CreateOrdersResponse response = new CreateOrdersResponse();
 		response.setResult(true);
+		
+		return response;
+	}
+
+	@Override
+	public DeleteOrdersResponse deleteOrders(DeleteOrdersRequest request) {
+		// 取得訂單參數與既有資料比對
+		BigInteger customerId = request.getCustomerId();
+		Order order = request.getOrder();
+		
+		DeleteOrdersResponse response = new DeleteOrdersResponse();
+		
+		// 尋找訂單並且刪除, 如果找不到就回傳刪除失敗
+		List<Order> orders = customerOrders.get(customerId);
+		for(int i = 0; i<orders.size(); i++) {
+			if(orders.get(i).getId().equals(order.getId())) {
+				orders.remove(i);
+				response.setResult(true);
+				break;
+			} 			
+		}
 		
 		return response;
 	}

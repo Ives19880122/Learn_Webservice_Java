@@ -45,11 +45,25 @@
 					<xsd:element name="result" type="xsd:boolean"/>
 				</xsd:sequence>
 			</xsd:complexType>
+			<!-- 定義刪除訂單請求與回應 -->
+			<xsd:complexType name="deleteOrdersRequest">
+				<xsd:sequence>
+					<xsd:element name="customerId" type="xsd:integer"/>
+					<xsd:element name="order" type="tns:order"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="deleteOrdersResponse">
+				<xsd:sequence>
+					<xsd:element name="result" type="xsd:boolean"/>
+				</xsd:sequence>
+			</xsd:complexType>
 			<!-- 定義Element -->
 			<xsd:element name="getOrdersRequest" type="tns:getOrdersRequest"/>
 			<xsd:element name="getOrdersResponse" type="tns:getOrdersResponse"/>
 			<xsd:element name="createOrdersRequest" type="tns:createOrdersRequest"/>
 			<xsd:element name="createOrdersResponse" type="tns:createOrdersResponse"/>
+			<xsd:element name="deleteOrdersRequest" type="tns:deleteOrdersRequest"/>
+			<xsd:element name="deleteOrdersResponse" type="tns:deleteOrdersResponse"/>
 		</xsd:schema>
 	</wsdl:types>
 	<!-- 定義wsdl message -->
@@ -65,6 +79,13 @@
 	<wsdl:message name="createOrdersResponse">
 		<wsdl:part element="tns:createOrdersResponse" name="parameters" />
 	</wsdl:message>
+	<wsdl:message name="deleteOrdersRequest">
+		<wsdl:part element="tns:deleteOrdersRequest" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="deleteOrdersResponse">
+		<wsdl:part element="tns:deleteOrdersResponse" name="parameters" />
+	</wsdl:message>
+	
 	<!-- 定義operations -->
 	<wsdl:portType name="CustomerOrdersPortType">
 		<wsdl:operation name="getOrders">
@@ -74,6 +95,10 @@
 		<wsdl:operation name="createOrders">
 			<wsdl:input message="tns:createOrdersRequest" name="createOrdersRequest"/>
 			<wsdl:output message="tns:createOrdersResponse" name="createOrdersResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="deleteOrders">
+			<wsdl:input message="tns:deleteOrdersRequest" name="deleteOrdersRequest"/>
+			<wsdl:output message="tns:deleteOrdersResponse" name="deleteOrdersResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
 	<!-- 定義binding -->
@@ -97,6 +122,16 @@
 				<soap:body use="literal" />
 			</wsdl:input>
 			<wsdl:output name="createOrdersResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="deleteOrders">
+			<soap:operation
+				soapAction="http://trainings.ws.bharath.com/NewOperation" />
+			<wsdl:input name="deleteOrdersRequest">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="deleteOrdersResponse">
 				<soap:body use="literal" />
 			</wsdl:output>
 		</wsdl:operation>
