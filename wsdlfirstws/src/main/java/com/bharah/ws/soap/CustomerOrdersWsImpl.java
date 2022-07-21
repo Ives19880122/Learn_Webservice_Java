@@ -46,10 +46,11 @@ public class CustomerOrdersWsImpl implements CustomerOrdersPortType {
 	
 	@Override
 	public GetOrdersResponse getOrders(GetOrdersRequest request) {
-		// TODO Auto-generated method stub
+		// 取得訂單資料
 		BigInteger customerId = request.getCustomerId();
 		List<Order> orders = customerOrders.get(customerId);
 		
+		// 回傳訂單資料
 		GetOrdersResponse response = new GetOrdersResponse();
 		response.getOrder().addAll(orders);
 		
@@ -57,9 +58,19 @@ public class CustomerOrdersWsImpl implements CustomerOrdersPortType {
 	}
 
 	@Override
-	public CreateOrdersResponse createOrders(CreateOrdersRequest parameters) {
-		// TODO Auto-generated method stub
-		return null;
+	public CreateOrdersResponse createOrders(CreateOrdersRequest request) {
+		BigInteger customerId = request.getCustomerId();
+		Order order = request.getOrder();
+		
+		// 新增訂單
+		List<Order> orders = customerOrders.get(customerId);
+		orders.add(order);
+		
+		// 設定回傳結果
+		CreateOrdersResponse response = new CreateOrdersResponse();
+		response.setResult(true);
+		
+		return response;
 	}
 
 }
