@@ -45,9 +45,15 @@ public class CustomerOrdersWsImpl implements CustomerOrdersPortType {
 	}
 	
 	@Override
-	public GetOrdersResponse getOrders(GetOrdersRequest parameters) {
+	public GetOrdersResponse getOrders(GetOrdersRequest request) {
 		// TODO Auto-generated method stub
-		return null;
+		BigInteger customerId = request.getCustomerId();
+		List<Order> orders = customerOrders.get(customerId);
+		
+		GetOrdersResponse response = new GetOrdersResponse();
+		response.getOrder().addAll(orders);
+		
+		return response;
 	}
 
 	@Override
