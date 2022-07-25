@@ -1,146 +1,39 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<wsdl:definitions
-	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-	xmlns:tns="http://trainings.ws.bharath.com"
-	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CustomerOrdersService"
-	targetNamespace="http://trainings.ws.bharath.com">
-	<wsdl:types>
-		<xsd:schema
-			targetNamespace="http://trainings.ws.bharath.com">
-			<!-- 定義product與order -->
-			<xsd:complexType name="product">
-				<xsd:sequence>
-					<xsd:element minOccurs="0" name="id" type="xsd:string"/>
-					<xsd:element minOccurs="0" name="description" type="xsd:string"/>
-					<xsd:element minOccurs="0" name="quantity" type="xsd:integer"/>
-				</xsd:sequence>
-			</xsd:complexType>
-			<xsd:complexType name="order">
-				<xsd:sequence>
-					<xsd:element name="id" type="xsd:integer"/>
-					<xsd:element name="product" type="tns:product" maxOccurs="unbounded"/>
-				</xsd:sequence>
-			</xsd:complexType>
-			<!-- 定義取得訂單請求與回應 -->
-			<xsd:complexType name="getOrdersRequest">
-				<xsd:sequence>
-					<xsd:element name="customerId" type="xsd:integer" minOccurs="0"/>
-				</xsd:sequence>
-			</xsd:complexType>
-			<xsd:complexType name="getOrdersResponse">
-				<xsd:sequence>
-					<xsd:element name="order" type="tns:order"  maxOccurs="unbounded" minOccurs="0"/>
-				</xsd:sequence>
-			</xsd:complexType>
-			<!-- 定義建立訂單請求與回應 -->
-			<xsd:complexType name="createOrdersRequest">
-				<xsd:sequence>
-					<xsd:element name="customerId" type="xsd:integer"/>
-					<xsd:element name="order" type="tns:order"/>
-				</xsd:sequence>
-			</xsd:complexType>
-			<xsd:complexType name="createOrdersResponse">
-				<xsd:sequence>
-					<xsd:element name="result" type="xsd:boolean"/>
-				</xsd:sequence>
-			</xsd:complexType>
-			<!-- 定義刪除訂單請求與回應 -->
-			<xsd:complexType name="deleteOrdersRequest">
-				<xsd:sequence>
-					<xsd:element name="customerId" type="xsd:integer"/>
-					<xsd:element name="order" type="tns:order"/>
-				</xsd:sequence>
-			</xsd:complexType>
-			<xsd:complexType name="deleteOrdersResponse">
-				<xsd:sequence>
-					<xsd:element name="result" type="xsd:boolean"/>
-				</xsd:sequence>
-			</xsd:complexType>
-			<!-- 定義Element -->
-			<xsd:element name="getOrdersRequest" type="tns:getOrdersRequest"/>
-			<xsd:element name="getOrdersResponse" type="tns:getOrdersResponse"/>
-			<xsd:element name="createOrdersRequest" type="tns:createOrdersRequest"/>
-			<xsd:element name="createOrdersResponse" type="tns:createOrdersResponse"/>
-			<xsd:element name="deleteOrdersRequest" type="tns:deleteOrdersRequest"/>
-			<xsd:element name="deleteOrdersResponse" type="tns:deleteOrdersResponse"/>
-		</xsd:schema>
-	</wsdl:types>
-	<!-- 定義wsdl message -->
-	<wsdl:message name="getOrdersRequest">
-		<wsdl:part element="tns:getOrdersRequest" name="parameters" />
-	</wsdl:message>
-	<wsdl:message name="getOrdersResponse">
-		<wsdl:part element="tns:getOrdersResponse" name="parameters" />
-	</wsdl:message>
-	<wsdl:message name="createOrdersRequest">
-		<wsdl:part element="tns:createOrdersRequest" name="parameters" />
-	</wsdl:message>
-	<wsdl:message name="createOrdersResponse">
-		<wsdl:part element="tns:createOrdersResponse" name="parameters" />
-	</wsdl:message>
-	<wsdl:message name="deleteOrdersRequest">
-		<wsdl:part element="tns:deleteOrdersRequest" name="parameters" />
-	</wsdl:message>
-	<wsdl:message name="deleteOrdersResponse">
-		<wsdl:part element="tns:deleteOrdersResponse" name="parameters" />
-	</wsdl:message>
-	
-	<!-- 定義operations -->
-	<wsdl:portType name="CustomerOrdersPortType">
-		<wsdl:operation name="getOrders">
-			<wsdl:input message="tns:getOrdersRequest" name="getOrdersRequest"/>
-			<wsdl:output message="tns:getOrdersResponse" name="getOrdersResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="createOrders">
-			<wsdl:input message="tns:createOrdersRequest" name="createOrdersRequest"/>
-			<wsdl:output message="tns:createOrdersResponse" name="createOrdersResponse"/>
-		</wsdl:operation>
-		<wsdl:operation name="deleteOrders">
-			<wsdl:input message="tns:deleteOrdersRequest" name="deleteOrdersRequest"/>
-			<wsdl:output message="tns:deleteOrdersResponse" name="deleteOrdersResponse"/>
-		</wsdl:operation>
-	</wsdl:portType>
-	<!-- 定義binding -->
-	<wsdl:binding name="CustomerOrdersServiceSoapBinding" type="tns:CustomerOrdersPortType">
-		<soap:binding style="document"
-			transport="http://schemas.xmlsoap.org/soap/http" />
-		<wsdl:operation name="getOrders">
-			<soap:operation
-				soapAction="http://trainings.ws.bharath.com/NewOperation" />
-			<wsdl:input name="getOrdersRequest">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getOrdersResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="createOrders">
-			<soap:operation
-				soapAction="http://trainings.ws.bharath.com/NewOperation" />
-			<wsdl:input name="createOrdersRequest">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="createOrdersResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-		</wsdl:operation>
-		<wsdl:operation name="deleteOrders">
-			<soap:operation
-				soapAction="http://trainings.ws.bharath.com/NewOperation" />
-			<wsdl:input name="deleteOrdersRequest">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="deleteOrdersResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-		</wsdl:operation>
-	</wsdl:binding>
-	<!-- 定義Service -->
-	<wsdl:service name="CustomerOrders">
-		<wsdl:port binding="tns:CustomerOrdersServiceSoapBinding"
-			name="CustomerOrdersPort">
-			<soap:address location="http://localhost:8080/wsdlfirst/services/customerOrdersService" />
-		</wsdl:port>
-	</wsdl:service>
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://soap.ws.bharah.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:ns1="http://trainings.ws.bharath.com" name="CustomerOrdersWsImplService" targetNamespace="http://soap.ws.bharah.com/">
+  <wsdl:import location="http://localhost:8080/wsdlfirstws/customerordersservice?wsdl=CustomerOrdersPortType.wsdl" namespace="http://trainings.ws.bharath.com">
+    </wsdl:import>
+  <wsdl:binding name="CustomerOrdersWsImplServiceSoapBinding" type="ns1:CustomerOrdersPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="deleteOrders">
+      <soap:operation soapAction="http://trainings.ws.bharath.com/NewOperation" style="document"/>
+      <wsdl:input name="deleteOrders">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteOrdersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createOrders">
+      <soap:operation soapAction="http://trainings.ws.bharath.com/NewOperation" style="document"/>
+      <wsdl:input name="createOrders">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createOrdersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getOrders">
+      <soap:operation soapAction="http://trainings.ws.bharath.com/NewOperation" style="document"/>
+      <wsdl:input name="getOrders">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getOrdersResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CustomerOrdersWsImplService">
+    <wsdl:port binding="tns:CustomerOrdersWsImplServiceSoapBinding" name="CustomerOrdersWsImplPort">
+      <soap:address location="http://localhost:8080/wsdlfirstws/customerordersservice"/>
+    </wsdl:port>
+  </wsdl:service>
 </wsdl:definitions>
