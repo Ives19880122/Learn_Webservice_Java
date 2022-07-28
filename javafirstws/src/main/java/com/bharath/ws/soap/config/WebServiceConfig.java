@@ -8,6 +8,8 @@ import javax.xml.ws.Endpoint;
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
+import org.apache.wss4j.common.ConfigurationConstants;
+import org.apache.wss4j.dom.WSConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,11 +32,16 @@ public class WebServiceConfig {
 		EndpointImpl endpoint = new EndpointImpl(bus,new PaymentProcessorImpl());
 		endpoint.publish("/paymentProcessor");
 		
-		// TODO 定義Token相關設定
-		Map<String, Object> hashMap = new HashMap<>();
-		
+		Map<String, Object> inProps = new HashMap<>();
+		// 配置常數
+		inProps.put(ConfigurationConstants.ACTION, ConfigurationConstants.USERNAME_TOKEN);
+		// 密碼類型
+		inProps.put(ConfigurationConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
+		// 密碼回應類別
+		inProps.put(ConfigurationConstants.PW_CALLBACK_CLASS, UTPasswordCallBack.class.getName());
+				
 		// 設置攔截器
-		WSS4JInInterceptor wssIn = new WSS4JInInterceptor(hashMap);
+		WSS4JInInterceptor wssIn = new WSS4JInInterceptor(inProps);
 		endpoint.getInInterceptors().add(wssIn);
 		
 		return endpoint;
