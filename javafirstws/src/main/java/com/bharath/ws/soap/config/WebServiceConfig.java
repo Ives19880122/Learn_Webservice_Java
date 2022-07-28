@@ -1,9 +1,13 @@
 package com.bharath.ws.soap.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.xml.ws.Endpoint;
 
 import org.apache.cxf.Bus;
 import org.apache.cxf.jaxws.EndpointImpl;
+import org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,8 +27,16 @@ public class WebServiceConfig {
 	 */
 	@Bean
 	public Endpoint endpoint() {
-		Endpoint endpoint = new EndpointImpl(bus,new PaymentProcessorImpl());
+		EndpointImpl endpoint = new EndpointImpl(bus,new PaymentProcessorImpl());
 		endpoint.publish("/paymentProcessor");
+		
+		// TODO 定義Token相關設定
+		Map<String, Object> hashMap = new HashMap<>();
+		
+		// 設置攔截器
+		WSS4JInInterceptor wssIn = new WSS4JInInterceptor(hashMap);
+		endpoint.getInInterceptors().add(wssIn);
+		
 		return endpoint;
 	}
 }
