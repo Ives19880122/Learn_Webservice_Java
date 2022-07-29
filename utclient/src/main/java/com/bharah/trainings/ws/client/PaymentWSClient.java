@@ -9,6 +9,8 @@ import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.frontend.ClientProxy;
 import org.apache.cxf.ws.security.wss4j.WSS4JOutInterceptor;
+import org.apache.wss4j.dom.WSConstants;
+import org.apache.wss4j.dom.handler.WSHandlerConstants;
 
 import com.bharath.ws.soap.PaymentProcessor;
 import com.bharath.ws.soap.PaymentProcessorImplService;
@@ -28,8 +30,11 @@ public class PaymentWSClient {
 			PaymentProcessor port = service.getPaymentProcessorImplPort();
 			Client client = ClientProxy.getClient(port);
 			Endpoint endpoint = client.getEndpoint();
-			
+			// 設置參數
 			Map<String, Object> props = new HashMap<>();
+			props.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
+			props.put(WSHandlerConstants.USER, "cxf");
+			props.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
 			
 			// 配置Interceptor至endpoint
 			WSS4JOutInterceptor wssOut = new WSS4JOutInterceptor(props);
