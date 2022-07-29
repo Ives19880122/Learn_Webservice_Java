@@ -34,6 +34,13 @@
 			<artifactId>cxf-spring-boot-starter-jaxws</artifactId>
 			<version>3.2.1</version>
 		</dependency>
+
+		<!-- Security dependency -->
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-ws-security</artifactId>
+			<version>3.2.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
