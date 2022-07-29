@@ -35,6 +35,7 @@ public class PaymentWSClient {
 			props.put(WSHandlerConstants.ACTION, WSHandlerConstants.USERNAME_TOKEN);
 			props.put(WSHandlerConstants.USER, "cxf");
 			props.put(WSHandlerConstants.PASSWORD_TYPE, WSConstants.PW_TEXT);
+			props.put(WSHandlerConstants.PW_CALLBACK_CLASS, UTPasswordCallback.class.getName());
 			
 			// 配置Interceptor至endpoint
 			WSS4JOutInterceptor wssOut = new WSS4JOutInterceptor(props);
