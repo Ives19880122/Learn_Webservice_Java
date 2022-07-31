@@ -33,6 +33,11 @@ public class PatientServiceImpl implements PatientService {
 		Collection<Patient> values = patients.values();
 		return new ArrayList<Patient>(values);
 	}
+
+	@Override
+	public Patient getPatient(Long id) {
+		return patients.get(id);
+	}
 	
 	
 }
