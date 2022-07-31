@@ -48,5 +48,18 @@ public class PatientServiceImpl implements PatientService {
 		// 回傳patient物件
 		return Response.ok(patient).build();
 	}
+
+	@Override
+	public Response updatePatient(Patient patient) {
+		Patient currentPatient = patients.get(patient.getId());
+		Response response;
+		if(currentPatient!=null) {
+			patients.put(patient.getId(), patient);
+			response = Response.ok().build();
+		}else {
+			response = Response.notModified().build();
+		}
+		return response;
+	}
 	
 }
