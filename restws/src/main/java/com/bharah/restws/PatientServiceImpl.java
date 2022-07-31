@@ -1,6 +1,9 @@
 package com.bharah.restws;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -24,4 +27,12 @@ public class PatientServiceImpl implements PatientService {
 		patient.setName("JavaRS");
 		patients.put(patient.getId(), patient);
 	}
+
+	@Override
+	public List<Patient> getPatients() {
+		Collection<Patient> values = patients.values();
+		return new ArrayList<Patient>(values);
+	}
+	
+	
 }
