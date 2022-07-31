@@ -2,6 +2,7 @@ package com.bharah.restws;
 
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -29,7 +30,7 @@ public interface PatientService {
 	 */
 	@Path("/patients/{id}")
 	@GET
-	Patient getPatient(@PathParam(value = "id") Long id);
+	Patient getPatient(@PathParam("id") Long id);
 	
 	/**
 	 * 新增病患
@@ -48,4 +49,13 @@ public interface PatientService {
 	@Path("/patients")
 	@PUT
 	Response updatePatient(Patient patient);
+	
+	/**
+	 * 刪除病患
+	 * @param id
+	 * @return
+	 */
+	@Path("/patients/{id}")
+	@DELETE
+	Response deletePatient(@PathParam("id") Long id);
 }
