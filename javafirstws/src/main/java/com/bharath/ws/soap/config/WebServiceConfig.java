@@ -42,7 +42,7 @@ public class WebServiceConfig {
 				
 		// 設置攔截器
 		WSS4JInInterceptor wssIn = new WSS4JInInterceptor(inProps);
-		endpoint.getInInterceptors().add(wssIn);
+//		endpoint.getInInterceptors().add(wssIn);
 		
 		return endpoint;
 	}
