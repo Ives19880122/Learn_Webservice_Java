@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.endpoint.Endpoint;
 import org.apache.cxf.frontend.ClientProxy;
@@ -23,10 +25,12 @@ public class PaymentWSClient {
 	 * 建立Client端
 	 * 1. 沒有建立Token 執行會導致錯誤
 	 * @param args
+	 * @throws DatatypeConfigurationException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws DatatypeConfigurationException {
 		try {
-			PaymentProcessorImplService service = new PaymentProcessorImplService(new URL("http://localhost:8080/javafirstws/paymentProcessor?wsdl"));
+			PaymentProcessorImplService service = new PaymentProcessorImplService(new URL(
+					"http://localhost:8080/javafirstws/paymentProcessor?wsdl"));
 			PaymentProcessor port = service.getPaymentProcessorImplPort();
 			Client client = ClientProxy.getClient(port);
 			Endpoint endpoint = client.getEndpoint();
@@ -39,8 +43,9 @@ public class PaymentWSClient {
 			
 			// 配置Interceptor至endpoint
 			WSS4JOutInterceptor wssOut = new WSS4JOutInterceptor(props);
-			endpoint.getInInterceptors().add(wssOut);
-			
+			// 一定要配置OutInterceptors, 不能誤用InInterceptors
+			endpoint.getOutInterceptors().add(wssOut);
+						
 			PaymentProcessorResponse response = port.processPayment(new PaymentProcessorRequest());
 			
 			System.out.println(response.isResult());			
