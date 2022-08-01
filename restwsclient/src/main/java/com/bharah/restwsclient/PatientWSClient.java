@@ -39,6 +39,7 @@ public class PatientWSClient {
 		// 設置Entity, inject物件 並且設定為XML/JSON
 		Response updateResponse = putTarget.request().put(Entity.entity(patient,MediaType.APPLICATION_XML));
 		System.out.println(updateResponse.getStatus());
+		updateResponse.close();
 		
 		// create patient
 		Patient newPatient = new Patient();
@@ -48,6 +49,18 @@ public class PatientWSClient {
 		Patient createPatient = postTarget.request()
 				.post(Entity.entity(patient, MediaType.APPLICATION_XML),Patient.class);
 		System.out.println("Create Patient ID "+ createPatient.getId());
+		
+		// delete patient
+		WebTarget deleteTarget = client.target(PATIENT_SERVICE_URL)
+				.path("/patients")
+				.path("/{id}")
+				.resolveTemplate("id", 125);
+		Response delResponse = deleteTarget.request().delete();
+		System.out.println(delResponse.getStatus());
+		delResponse.close();
+		
+		// 結束時關閉資源
+		client.close();
 	}
 
 }
