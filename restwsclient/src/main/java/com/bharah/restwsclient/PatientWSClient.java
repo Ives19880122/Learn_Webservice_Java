@@ -39,6 +39,15 @@ public class PatientWSClient {
 		// 設置Entity, inject物件 並且設定為XML/JSON
 		Response updateResponse = putTarget.request().put(Entity.entity(patient,MediaType.APPLICATION_XML));
 		System.out.println(updateResponse.getStatus());
+		
+		// create patient
+		Patient newPatient = new Patient();
+		newPatient.setName("JavaSE");
+		
+		WebTarget postTarget = client.target(PATIENT_SERVICE_URL).path("/patients");
+		Patient createPatient = postTarget.request()
+				.post(Entity.entity(patient, MediaType.APPLICATION_XML),Patient.class);
+		System.out.println("Create Patient ID "+ createPatient.getId());
 	}
 
 }
