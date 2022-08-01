@@ -2,8 +2,11 @@ package com.bharah.restwsclient;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.bharah.restwsclient.model.Patient;
 
@@ -24,9 +27,18 @@ public class PatientWSClient {
 		Builder request = target.request();
 		// 請求獲得回應
 		Patient patient = request.get(Patient.class);
+		
 		// 提取結果
 		System.out.println(patient.getId());
 		System.out.println(patient.getName());
+		
+		patient.setName("servlet");
+		
+		// 進行Update操作
+		WebTarget putTarget = client.target(PATIENT_SERVICE_URL).path("/patients");
+		// 設置Entity, inject物件 並且設定為XML/JSON
+		Response updateResponse = putTarget.request().put(Entity.entity(patient,MediaType.APPLICATION_XML));
+		System.out.println(updateResponse.getStatus());
 	}
 
 }
