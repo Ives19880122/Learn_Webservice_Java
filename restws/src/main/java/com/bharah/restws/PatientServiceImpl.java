@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 import org.springframework.stereotype.Service;
@@ -38,7 +40,14 @@ public class PatientServiceImpl implements PatientService {
 
 	@Override
 	public Patient getPatient(Long id) {
-		return patients.get(id);
+		Patient patient = patients.get(id);
+		if(patient==null) {
+			// 可以使用jax-rs預設的例外拋出
+			throw new NotFoundException();
+			// 也能使用ＷebApplicationException			
+			// throw new WebApplicationException(Response.Status.NOT_FOUND);
+		}
+		return patient;
 	}
 
 	@Override
