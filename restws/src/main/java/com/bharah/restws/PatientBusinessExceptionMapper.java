@@ -1,5 +1,6 @@
 package com.bharah.restws;
 
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -11,7 +12,15 @@ public class PatientBusinessExceptionMapper implements ExceptionMapper<PatientBu
 
 	@Override
 	public Response toResponse(PatientBusinessException e) {
-		return Response.status(404).build();
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"status\":\"error\",");
+		sb.append("\"message\":\"Try Again Later!\",");
+		sb.append("}");
+		return Response.serverError()
+				.entity(sb.toString())
+				.type(MediaType.APPLICATION_JSON)
+				.build();
 	}
 
 }
