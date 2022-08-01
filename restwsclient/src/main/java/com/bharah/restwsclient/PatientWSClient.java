@@ -9,11 +9,17 @@ import com.bharah.restwsclient.model.Patient;
 
 public class PatientWSClient {
 
+	private static final String PATIENT_SERVICE_URL = "http://localhost:8080/restws/services/patientservice";
+
 	public static void main(String[] args) {
 		// 建立Client端實體
 		Client client = ClientBuilder.newClient();
 		// client 指向 WebTarget
-		WebTarget target = client.target("http://localhost:8080/restws/services/patientservice/patients/123");
+		WebTarget target = client.target(PATIENT_SERVICE_URL)
+				.path("/patients")
+				.path("/{id}")
+				.resolveTemplate("id", 123);
+		
 		// target建立請求
 		Builder request = target.request();
 		// 請求獲得回應
