@@ -14,15 +14,16 @@ public class PassengerServiceImpl implements PassengerService {
 	int currentId = 123;
 	
 	@Override
-	public List<Passenger> getPassengers() {
+	public List<Passenger> getPassengers(int start, int size) {
+		System.out.println(start);
+		System.out.println(size);
 		return passengers;
 	}
 
 	@Override
-	public Passenger addPassenger(Passenger passenger) {
-		passenger.setId(currentId++);
-		passengers.add(passenger);
-		return passenger;
+	public void addPassenger(String firstName, String lastName) {
+		System.out.println(firstName);
+		System.out.println(lastName);
 	}
 
 }
