@@ -2,13 +2,17 @@ package com.bharah.restws.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="Course")
+@Entity
 public class Course {
+	@Id
 	Long id;
 	String name;
-	String taughtBy;
+	String taughtby;
 	BigDecimal price;
 	Integer rating;
 	
@@ -25,10 +29,10 @@ public class Course {
 		this.name = name;
 	}
 	public String getTaughtBy() {
-		return taughtBy;
+		return taughtby;
 	}
-	public void setTaughtBy(String taughtBy) {
-		this.taughtBy = taughtBy;
+	public void setTaughtBy(String taughtby) {
+		this.taughtby = taughtby;
 	}
 	public BigDecimal getPrice() {
 		return price;
